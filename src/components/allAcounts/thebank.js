@@ -16,14 +16,14 @@ export default function Thebank() {
 
     useEffect(() => {
         const search = async () => {
-            const getData = await axios.get('http://bank-gilad.herokuapp.com/api/');
+            const getData = await axios.get('https://bank-gilad.herokuapp.com/api/');
             setData(getData.data)
         }
         search();
     }, [data])
 
     const createNewAccount = async () => {
-        const newAccount = await axios.post(`http://bank-gilad.herokuapp.com/api/${newPassport}/${newName}`)
+        const newAccount = await axios.post(`https://bank-gilad.herokuapp.com/api/${newPassport}/${newName}`)
         const kind = Object.keys(newAccount.data)
         const text = Object.values(newAccount.data)
         setMessage(`${kind[0].toUpperCase()}!, ${text[0]}`)

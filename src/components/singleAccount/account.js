@@ -21,9 +21,9 @@ export default function Account() {
     
     useEffect(() => {
         const search = async () => {
-            const getData = await axios.get(`http://bank-gilad.herokuapp.com/api/accounts/${passport}`);
+            const getData = await axios.get(`https://bank-gilad.herokuapp.com/api/accounts/${passport}`);
             setAccount(getData.data)
-            const getTrans = await axios.get(`http://bank-gilad.herokuapp.com/api/accounts/${passport}/transactions`)
+            const getTrans = await axios.get(`https://bank-gilad.herokuapp.com/api/accounts/${passport}/transactions`)
             setTransactions(getTrans.data) 
     }
     search()
@@ -33,7 +33,7 @@ export default function Account() {
     const applyAction = async () => {
         const confirm = await axios({
             method: 'put',
-            url: `http://bank-gilad.herokuapp.com/api/accounts/${passport}/${action}`,
+            url: `https://bank-gilad.herokuapp.com/api/accounts/${passport}/${action}`,
             data: {
                 amount : amount
             }
@@ -49,7 +49,7 @@ export default function Account() {
     const applyTransfer = async () => {
         const confirm = await axios({
             method: 'put',
-            url: `http://bank-gilad.herokuapp.com/api/accounts/${passport}/transfer`,
+            url: `https://bank-gilad.herokuapp.com/api/accounts/${passport}/transfer`,
             data: {
                 toAccount : reciver,
                 amount : amount
