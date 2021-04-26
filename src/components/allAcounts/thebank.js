@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import Button from '../untilities/Button'
 import Table from '../untilities/Table'
 import Input from '../untilities/Input'
 import './theBank.css'
@@ -8,41 +7,28 @@ import './theBank.css'
 export default function Thebank() {
 
     const [data, setData] = useState([])
-    const [newPassport, setNewPassport] = useState('')
-    const [newName, setNewName] = useState('')
-    const [message, setMessage] = useState('')
     const [search , setSearch] = useState('')
     const [filter , setFilter] = useState(null)
 
     useEffect(() => {
         const search = async () => {
-            const getData = await axios.get('https://bank-gilad.herokuapp.com/api/');
+            const token = localStorage.getItem('token')
+            const getData = await axios({
+                method : 'get',
+                url : `https://bank-gilad.herokuapp.com/api/`,
+                headers : {
+                    'Authorization':`Bearer ${token}`
+                }
+            })
             setData(getData.data)
         }
         search();
     }, [data])
 
-    const createNewAccount = async () => {
-        const newAccount = await axios.post(`https://bank-gilad.herokuapp.com/api/${newPassport}/${newName}`)
-        const kind = Object.keys(newAccount.data)
-        const text = Object.values(newAccount.data)
-        setMessage(`${kind[0].toUpperCase()}!, ${text[0]}`)
-        setTimeout(() => {
-            setMessage('')
-        }, 3500);      
-    }
-
     return (
         <div>
-            <div className="upperPage">
+            <div className="upperPage" style={{height:'15%'}}>
                 <h1 style={{ textAlign: 'center' }}>Welcome, Mr. Manager</h1>
-                <div className="newUserSection">
-                    <h3>Create New Account:</h3>
-                    <Input name="Passport:" type="text" onChange={(e) => setNewPassport(e.target.value)} />
-                    <Input name="Name:" type="text" onChange={(e) => setNewName(e.target.value)} />
-                    <Button name="Add New Account" onClick={createNewAccount} />
-                </div>
-                <p className="message">{message}</p>
             </div>
             <div className="searchBAr">
             <Input type="text" name="Search By Name or Passport :" onChange={(e)=> setSearch(e.target.value)}/>

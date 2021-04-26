@@ -21,7 +21,14 @@ export default function Account() {
     
     useEffect(() => {
         const search = async () => {
-            const getData = await axios.get(`https://bank-gilad.herokuapp.com/api/accounts/${passport}`);
+            const token = localStorage.getItem('token')
+            const getData = await axios({
+                method : 'get',
+                url : `https://bank-gilad.herokuapp.com/api/accounts/${passport}`,
+                headers : {
+                    'Authorization':`Bearer ${token}`
+                },
+            });
             setAccount(getData.data)
             const getTrans = await axios.get(`https://bank-gilad.herokuapp.com/api/accounts/${passport}/transactions`)
             setTransactions(getTrans.data) 
